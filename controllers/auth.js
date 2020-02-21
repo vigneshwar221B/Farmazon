@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs')
+const bcryptjs = require('bcryptjs')
 const passport = require('passport')
 
 // Load User model
@@ -13,7 +13,8 @@ exports.postLogin = (req, res, next) => {
 		failureFlash: true,
 	})(req, res, next)
 }
-exports.postRegister = (req, res) => {
+
+exports.postRegister = async (req, res) => {
 	const { name, email, password, password2, role } = req.body
 	let errors = []
 
@@ -30,7 +31,7 @@ exports.postRegister = (req, res) => {
 	// }
 
 	if (errors.length > 0) {
-		res.render('auth/register', {
+		return res.render('auth/register', {
 			errors,
 			name,
 			email,
@@ -38,44 +39,44 @@ exports.postRegister = (req, res) => {
 			password2,
 			role,
 		})
-	} else {
-		User.findOne({ email: email }).then(user => {
-			if (user) {
-				errors.push({ msg: 'Email already exists' })
-				res.render('auth/register', {
-					errors,
-					name,
-					email,
-					password,
-					password2,
-					role,
-				})
-			} else {
-				const newUser = new User({
-					name,
-					email,
-					password,
-					role,
-				})
+	}
+	try {
+		const user = await User.findOne({ email: email })
 
-				bcrypt.genSalt(10, (err, salt) => {
-					bcrypt.hash(newUser.password, salt, (err, hash) => {
-						if (err) throw err
-						newUser.password = hash
-						newUser
-							.save()
-							.then(user => {
-								req.flash(
-									'success_msg',
-									'You are now registered and can log in'
-								)
-								res.redirect('/login')
-							})
-							.catch(err => console.log(err))
-					})
-				})
-			}
+		//check if user already exists
+		if (user) {
+			errors.push({ msg: 'Email already exists' })
+			return res.render('auth/register', {
+				errors,
+				name,
+				email,
+				password,
+				password2,
+				role,
+			})
+		}
+
+		//Hash the password
+		const salt = await bcryptjs.genSalt(10)
+		const hashedPassword = await bcryptjs.hash(password, salt)
+
+		//creating new user
+		const newUser = new User({
+			name,
+			email,
+			password: hashedPassword,
+			role,
 		})
+
+		await newUser.save()
+
+		req.flash('success_msg', 'You are now registered and can log in')
+		res.redirect('/login')
+	} catch (err) {
+		console.log(err)
+		req.flash('error_msg', err)
+		if (role == 'farmer') return res.redirect('/farmerRegister')
+		return res.redirect('/register')
 	}
 }
 
