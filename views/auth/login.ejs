@@ -1,0 +1,21 @@
+<div class="row" style="align-items: center; margin-top: 100px;">
+	<div class="col s6 offset-s3 z-depth-1 " id="panell">
+		<h5 id="title">Login Form</h5>
+		<form method="POST" action="/login" id="myform_id">
+			<div class="input-field" id="username">
+				<input type="text" placeholder="email" name="email" />
+			</div>
+			<div class="input-field" id="password">
+				<input type="password" placeholder="password" name="password" />
+			</div>
+			<input type="hidden" />
+			<a
+				class="waves-effect waves-light btn deep-purple accent-3"
+				id="loginbtn"
+				href="javascript:$('#myform_id').submit();"
+				>Login</a
+			>
+			<p id="sub-text">new user? <a href="/register">register here</a></p>
+		</form>
+	</div>
+</div>
