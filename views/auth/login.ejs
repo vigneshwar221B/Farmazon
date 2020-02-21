@@ -1,18 +1,3 @@
-<%if(error.length > 0){%>
-	<script>
-			console.log('hello','<%= error %>')
-			M.AutoInit();
-			M.toast({ html: '<%= error %>', classes: 'rounded' });  
-	</script>
-<%}%>
-<%if(error_msg.length > 0){%>
-	<script>
-			console.log('hi','<%= error_msg %>')
-			M.AutoInit();
-			M.toast({ html: '<%= error_msg %>', classes: 'rounded' });  
-	</script>
-<%}%>
-
 <div class="row" style="align-items: center; margin-top: 100px;">
 	<div class="col s6 offset-s3 z-depth-1 " id="panell">
 		<h5 id="title">Login Form</h5>
@@ -23,7 +8,7 @@
 			<div class="input-field" id="password">
 				<input type="password" placeholder="password" name="password" />
 			</div>
-			<input type="hidden" />
+	
 			<a
 				class="waves-effect waves-light btn deep-purple accent-3"
 				id="loginbtn"

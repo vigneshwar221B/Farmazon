@@ -12,4 +12,18 @@ module.exports = {
 		}
 		res.redirect('/dashboard')
 	},
+	isFarmer: function(req, res, next) {
+		if (req.user.role == 'farmer') {
+			return next()
+		}
+		req.flash('error_msg', "you're not a seller here")
+		res.redirect('/dashboard')
+	},
+	isClient: function(req, res, next) {
+		if (req.user.role == 'client') {
+			return next()
+		}
+		req.flash('error_msg', 'you cant buy with a seller account')
+		res.redirect('/dashboard')
+	},
 }

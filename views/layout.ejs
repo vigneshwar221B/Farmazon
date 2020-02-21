@@ -29,8 +29,16 @@
 				<a href="/" class="brand-logo">Farmer</a>
 				<ul id="nav-mobile" class="right">
 					<% if (isAuth) { %>
-
 					<li><a href="/myprofile">My profile</a></li>
+
+					<% if (user.role == 'farmer') { %>
+					<li><a href="/addproducts">Add Products</a></li>
+					<li><a href="/viewproducts">View Products</a></li>
+					<li><a href="/orders">orders</a></li>
+					<% }else{ %>
+					<li><a href="/cart">cart</a></li>
+					<% } %>
+
 					<li><a href="/logout">Logout</a></li>
 
 					<% }else{ %>
@@ -41,6 +49,21 @@
 				</ul>
 			</div>
 		</nav>
+		<script>
+	    M.AutoInit();
+		</script>
+		<%if(error.length > 0){%>
+			<script>
+					console.log('hello','<%= error %>')
+					M.toast({ html: '<%= error %>', classes: 'rounded' });  
+			</script>
+		<%}%>
+		<%if(error_msg.length > 0){%>
+			<script>
+					console.log('hi','<%= error_msg %>')
+					M.toast({ html: '<%= error_msg %>', classes: 'rounded' });  
+			</script>
+		<%}%>
 		<%- body %>
 	</body>
 </html>
