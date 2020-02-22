@@ -81,7 +81,8 @@ exports.postRegister = async (req, res) => {
 }
 
 exports.getProfile = (req, res) => {
-	res.render('main/profile')
+	if (req.user.role == 'farmer') return res.render('farmer/profile')
+	res.render('client/profile')
 }
 
 exports.getFarmerRegister = (req, res) => {

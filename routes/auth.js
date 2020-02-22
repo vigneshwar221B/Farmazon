@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 
-const { forwardAuthenticated } = require('../config/auth')
+const { forwardAuthenticated, ensureAuthenticated } = require('../config/auth')
 const {
 	getLogin,
 	getFarmerRegister,
@@ -28,7 +28,7 @@ router.post('/login', postLogin)
 router.get('/logout', getLogout)
 
 //myprofile
-router.get('/myprofile', getProfile)
+router.get('/myprofile', ensureAuthenticated, getProfile)
 
 router.get('/farmerRegister', getFarmerRegister)
 

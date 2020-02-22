@@ -1,1 +1,8 @@
-view products
+<div class="row">
+	<% products.forEach(product => { %>
+	<div class="col s4">
+		name: <%= product.name %><br />
+		desc: <%= product.desc %>
+	</div>
+	<% }) %>
+</div>

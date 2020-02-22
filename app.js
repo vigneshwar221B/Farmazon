@@ -62,6 +62,7 @@ app.use(function(req, res, next) {
 app.use('/', require('./routes/index.js'))
 app.use('/', require('./routes/auth.js'))
 app.use('/', require('./routes/farmer.js'))
+app.use('/', require('./routes/client.js'))
 
 const PORT = process.env.PORT || 8080
 
