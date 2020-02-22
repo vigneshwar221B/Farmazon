@@ -13,11 +13,15 @@ exports.getOrders = (req, res) => {
 }
 
 exports.postAddProducts = async (req, res) => {
-	const { name, desc } = req.body
+	const { name, desc, specs } = req.body
+	console.log(req.file);
+	
 
 	const product = new Product({
 		name,
 		desc,
+		specs,
+		img: req.file.path,
 		seller: req.user,
 	})
 

@@ -9,6 +9,14 @@ const ProductSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	specs: {
+		type: String,
+		required: true,
+	},
+	img: {
+		type: String,
+		required: true,
+	},
 	seller: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'User',

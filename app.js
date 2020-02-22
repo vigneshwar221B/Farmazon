@@ -4,8 +4,9 @@ const express = require('express'),
 	flash = require('connect-flash'),
 	session = require('express-session'),
 	morgan = require('morgan'),
-	expressLayouts = require('express-ejs-layouts'),
-	app = express()
+	expressLayouts = require('express-ejs-layouts')
+
+const app = express()
 
 // Passport Config
 require('./config/passport')(passport)
@@ -19,8 +20,14 @@ mongoose
 	.then(() => console.log('MongoDB Connected'))
 	.catch(err => console.log(err))
 
+// multer config
+const multerjs = require('./config/multer')
+
+app.use(multerjs())
+
 //static files
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'))
+app.use('/images',express.static(__dirname + '/images'))
 
 // EJS
 app.set('view engine', 'ejs')
