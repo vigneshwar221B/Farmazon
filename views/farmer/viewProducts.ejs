@@ -1,10 +1,19 @@
 <div class="row">
 	<% products.forEach(product => { %>
-	<div class="col s4">
-		name: <%= product.name %><br />
-		desc: <%= product.desc %>
-		specs: <%= product.specs %>
-		<img src="/<%= product.img %>">
+	<div class="col s6 m6 ">
+		<div class="card" >
+			<div class="card-image" >
+				<img src="/<%= product.img %>" style="height: 400px;" />
+				
+			</div>
+			<div class="card-content">
+				<p><%= product.name %> </p>
+				<p>price: <%= product.price %> </p>
+			</div>
+			<div class="card-action">
+				<a href="/product/<%= product._id %>">more</a>
+			</div>
+		</div>
 	</div>
 	<% }) %>
 </div>

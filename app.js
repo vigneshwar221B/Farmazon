@@ -70,6 +70,7 @@ app.use('/', require('./routes/index.js'))
 app.use('/', require('./routes/auth.js'))
 app.use('/', require('./routes/farmer.js'))
 app.use('/', require('./routes/client.js'))
+app.use('/', require('./routes/product.js'))
 
 const PORT = process.env.PORT || 8080
 

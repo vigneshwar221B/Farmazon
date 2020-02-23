@@ -13,7 +13,7 @@ exports.getOrders = (req, res) => {
 }
 
 exports.postAddProducts = async (req, res) => {
-	const { name, desc, specs } = req.body
+	const { name, desc, specs, price } = req.body
 	console.log(req.file);
 	
 
@@ -21,6 +21,7 @@ exports.postAddProducts = async (req, res) => {
 		name,
 		desc,
 		specs,
+		price,
 		img: req.file.path,
 		seller: req.user,
 	})

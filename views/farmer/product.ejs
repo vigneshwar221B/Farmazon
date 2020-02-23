@@ -1,0 +1,23 @@
+<div class="container" style="margin-top: 50px;">
+	<div class="row">
+		<div class="col m4">
+			<img src="/<%= product.img %>" style="height: 300px; width: 100%;" />
+		</div>
+		<div class="col m8">
+			<div class="row">
+				<div class="col right">
+          <a href="/product/edit/<%= product._id %>"
+          class="waves-effect waves-light btn  deep-purple darken-2"
+						><i class="material-icons left">edit</i>edit</a
+					>
+				</div>
+			</div>
+			<div class="row"><%= product.name %></div>
+			<div class="row"><%= product.specs %></div>
+			<div class="row"><%= product.desc %></div>
+			<div class="row"><%= product.price %></div>
+			<div class="row">seller: <%= product.seller %></div>
+		</div>
+	</div>
+</div>
+

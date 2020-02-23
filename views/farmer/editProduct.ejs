@@ -5,7 +5,7 @@
 	<div class="col s12" style="padding:0;">
 		<div class="card hoverable">
 			<div class="card-content z-depth-2">
-				<span class="card-title">Add your new product here </span>
+				<span class="card-title">Edit your product here </span>
 
 				<div class="row " style="margin: 0;">
 					<div
@@ -15,7 +15,7 @@
 					>
 						<form
 							method="POST"
-							action="/addproduct"
+							action="/product/edit/<%= product._id %>"
 							id="myform2_id"
 							enctype="multipart/form-data"
 						>
@@ -24,6 +24,7 @@
 									type="text"
 									placeholder="Enter your productname"
 									name="name"
+									value="<%= product.name %>"
 								/>
 							</div>
 							<div class="input-field" id="link">
@@ -31,6 +32,7 @@
 									type="text"
 									placeholder="specs"
 									name="specs"
+									value="<%= product.specs %>"
 								/>
 							</div>
 							<div class="input-field" id="price">
@@ -38,16 +40,17 @@
 									type="text"
 									placeholder="price"
 									name="price"
+									value="<%= product.price %>"
 								/>
 							</div>
 
 							<div class="file-field input-field">
 								<div class="btn deep-purple accent-3">
 									<span>upload product image</span>
-									<input type="file" name="image" id="image" />
+									<input type="file" name="image" id="image" value="<%= product.img %>" />
 								</div>
 								<div class="file-path-wrapper">
-									<input class="file-path validate" type="text" />
+									<input class="file-path validate" type="text" value="/<%= product.img %>" />
 								</div>
 							</div>
 						</form>
@@ -58,7 +61,8 @@
 							cols="35"
 							wrap="soft"
 							placeholder="description about your product"
-						></textarea
+						><%= product.desc %>
+            </textarea
 						><br /><br />
 
 						<a
@@ -67,7 +71,7 @@
 							href="javascript:$('#myform2_id').submit();"
 						>
 							<i class="material-icons right">send</i>
-							submit
+							save
 						</a>
 					</div>
 				</div>

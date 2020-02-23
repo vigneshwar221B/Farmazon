@@ -5,6 +5,4 @@ const { ensureAuthenticated, isClient } = require('../config/auth')
 
 // client routes
 
-
-
 module.exports = router
