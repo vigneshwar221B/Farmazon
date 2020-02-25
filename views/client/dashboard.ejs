@@ -1,0 +1,69 @@
+<div class="container" style="margin-bottom: 300px">
+
+  <div class="row s12" style="margin: 19px; font-family: 'Pacifico'; font-size: 29pt; color: #aa00ff;">
+      <p class="center">search for products</p>
+  </div>
+  <div class="row s12" style="margin-bottom: 10px">
+      <div class="col s1"></div>
+          <div class="col s10">
+          
+              <div class="card-panel z-depth-3" 
+              style="padding-left: 17px; padding-right: 17px;padding-top: 3px;padding-bottom: 3px; margin-top:35px">
+
+                  <input type="text" id="search-box" 
+                  autocomplete="off" onkeydown="search(this)"
+                  placeholder="search ..."></input>
+                  
+              </div>
+
+          </div>
+      <div class="col s1"> </div>
+  </div>
+
+  <div class="row s12" id="resArea" style="margin-top: 30px">  </div>
+
+</div>
+
+<script>
+
+
+  const search = async() => {
+    if(event.key === 'Enter') {
+      const inputElement = $("#search-box")
+      const searchKeyword = inputElement.val()
+
+      const res = await fetch(`/search/${searchKeyword}`)
+      const data = await res.json()
+
+      console.log(data);
+      
+
+      const resArea = $("#resArea")
+      resArea.html('')
+
+      data.forEach(el => {
+                
+        $('#resArea').append(`
+            <div class="col s12 m4" style="padding: 10px">
+                <div class="card hoverable" style="margin: 0; padding: 10px">
+                
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" src="${el.img}" style="height: 230px">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">${el.name}<i class="material-icons right">more_vert</i></span>
+                        <p><a href="${"/product/" + el._id }">view</a></p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">${"created by "+el.seller}<i class="material-icons right">close</i></span>
+                        <p>${el.desc}</p>
+                    </div>
+                </div>
+            </div>
+        `)
+     })
+      
+    }
+    
+  }
+</script>

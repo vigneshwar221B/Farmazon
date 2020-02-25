@@ -1,0 +1,48 @@
+<div class="col">
+	<div class="row">
+		<div class="row right" style="margin-top: 15px; margin-right: 15px;">
+			<button
+				onclick="checkout()"
+				class="waves-effect waves-light btn  deep-purple darken-2"
+			>
+				<i class="material-icons left">arrow_right_alt</i>check out
+			</button>
+		</div>
+	</div>
+	<div class="row" style="padding: 8px;">
+		<% products.forEach(product => { %>
+		<div class="col s6 m6 ">
+			<div class="card">
+				<div class="card-image">
+					<img src="/<%= product.productId.img %>" style="height: 400px;" />
+				</div>
+				<div class="card-content">
+					<p><%= product.productId.name %></p>
+					<p>price: <%= product.productId.price %></p>
+				</div>
+				<div class="card-action">
+					<a href="/product/<%= product.productId._id %>">more</a>
+				</div>
+			</div>
+		</div>
+		<% }) %>
+	</div>
+</div>
+
+<script>
+	const checkout = () => {
+		let strdata = '<%- JSON.stringify(products) %>'
+		let data = JSON.parse(strdata)
+		console.log(data)
+
+		let ids = data.map(e => e._id)
+		let body = {
+			ids,
+			user: '<%= user._id %>',
+		}
+
+		$.post('/checkout', body, (data, status) => {
+			console.log('done')
+		})
+	}
+</script>
