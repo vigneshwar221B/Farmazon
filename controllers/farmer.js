@@ -1,4 +1,5 @@
 const Product = require('../models/Product')
+const Order = require('../models/Order')
 
 exports.getAddproducts = (req, res) => {
 	res.render('farmer/addProducts')
@@ -8,14 +9,19 @@ exports.getViewproducts = async (req, res) => {
 
 	res.render('farmer/viewProducts', { products })
 }
-exports.getOrders = (req, res) => {
-	res.render('farmer/orders')
+exports.getOrders = async (req, res) => {
+	const orders = await Order.findOne({ to: req.user })
+		.populate('products.productId')
+		.exec()
+	if(!orders)
+		return res.render('farmer/orders', {orders: null})
+
+	res.render('farmer/orders', {orders})
 }
 
 exports.postAddProducts = async (req, res) => {
 	const { name, desc, specs, price } = req.body
-	console.log(req.file);
-	
+	console.log(req.file)
 
 	const product = new Product({
 		name,

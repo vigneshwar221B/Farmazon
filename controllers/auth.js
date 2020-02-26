@@ -1,8 +1,9 @@
 const bcryptjs = require('bcryptjs')
 const passport = require('passport')
 
-// Load User model
+// Load  model
 const User = require('../models/User')
+const Cart = require('../models/Cart')
 
 exports.getLogin = (req, res) => res.render('auth/login')
 exports.getRegister = (req, res) => res.render('auth/register')
@@ -69,6 +70,15 @@ exports.postRegister = async (req, res) => {
 		})
 
 		await newUser.save()
+
+		if (role == 'client') {
+			const cart = new Cart({
+				products: [],
+				user: newUser,
+			})
+
+			await cart.save()
+		}
 
 		req.flash('success_msg', 'You are now registered and can log in')
 		res.redirect('/login')

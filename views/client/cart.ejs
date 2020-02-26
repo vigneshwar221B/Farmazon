@@ -31,18 +31,13 @@
 
 <script>
 	const checkout = () => {
-		let strdata = '<%- JSON.stringify(products) %>'
-		let data = JSON.parse(strdata)
-		console.log(data)
-
-		let ids = data.map(e => e._id)
 		let body = {
-			ids,
-			user: '<%= user._id %>',
+			cartId: '<%= cartId %>',
 		}
 
 		$.post('/checkout', body, (data, status) => {
-			console.log('done')
+			console.log(data)
+			location.reload(true)
 		})
 	}
 </script>

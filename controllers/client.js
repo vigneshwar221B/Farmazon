@@ -1,5 +1,6 @@
 const Product = require('../models/Product')
 const Cart = require('../models/Cart')
+const Order = require('../models/Order')
 
 exports.postAddCart = async (req, res) => {
 	const { id } = req.params
@@ -46,10 +47,9 @@ exports.getCart = (req, res) => {
 		.populate('products.productId')
 		.exec()
 		.then(cart => {
-			console.log(cart.products)
-
 			res.render('client/cart', {
 				products: cart.products,
+				cartId: cart._id,
 			})
 		})
 		.catch(err => {
@@ -58,11 +58,45 @@ exports.getCart = (req, res) => {
 		})
 }
 
-exports.postCheckout = (req, res) => {
-	console.log(req.body)
-	const {ids, user} = req.body
+exports.postCheckout = async (req, res) => {
+	const { cartId } = req.body
 
-	
+	const cart = await Cart.findById(cartId)
+		.populate('products.productId')
+		.exec()
 
-	res.send('hi')
+	const products = cart.products
+
+	products.forEach(el => {
+		Order.findOne({ from: req.user, to: el.productId.seller })
+			.then(order => {
+				if (!order) {
+					order = new Order()
+				}
+				const orderProducts = [...order.products]
+
+				orderProducts.push(el)
+				order.products = orderProducts
+				order.from = req.user
+				order.to = el.productId.seller
+
+				order.save().then(() => {
+					//delete the cart
+					Cart.findByIdAndDelete(cartId).then(() => {
+						res.send('done bish')
+					})
+				})
+			})
+			.catch(err => console.log(err))
+	})
+}
+
+exports.getHistory = async(req, res) => {
+	const orders = await Order.findOne({ from: req.user })
+		.populate('products.productId')
+		.exec()
+	if(!orders)
+		return res.render('client/history', {orders: null})
+
+	res.render('client/history', {orders})
 }
